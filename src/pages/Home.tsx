@@ -5,10 +5,10 @@ import { CustomHeader } from "@/components/ui/CustomHeader";
 import { useHome } from "@/hooks/home/useHome";
 import { colors } from "@/themes/colors";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 const Home = () => {
-  const { data, loading } = useHome();
+  const { data, loading, updateHabits, getHabits } = useHome();
 
   return (
     <View style={styles.container}>
@@ -16,16 +16,23 @@ const Home = () => {
       <View>
         <ProgressComponent />
         <View style={styles.habits}>
-          {data?.map((items) => {
-            return (
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            data?.map((items) => (
               <Habits
                 key={items.id_habito}
                 name={items.nombre}
-                id={items.id_habito}
+                id_habito={items.id_habito}
                 icon={items.icono}
+                completadoHoy={items.completadoHoy}
+                onToggle={async () => {
+                  await updateHabits(items.id_habito);
+                  await getHabits();
+                }}
               />
-            );
-          })}
+            ))
+          )}
         </View>
       </View>
     </View>
@@ -43,6 +50,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
   },
 });

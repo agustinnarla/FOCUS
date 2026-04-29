@@ -4,7 +4,6 @@ import { StyleSheet, Text, View } from "react-native";
 import * as Progress from "react-native-progress";
 
 const ProgressComponent = () => {
-  // Crear interfaces - Modificar Valores y dinamismo
   return (
     <LinearGradient
       colors={[colors.primary, colors.primaryOpacity]}

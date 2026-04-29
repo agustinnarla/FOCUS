@@ -1,89 +1,86 @@
 import { colors } from "@/themes/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-// Practico
 interface Props {
-  id: string;
+  id_habito: string;
   name: string;
   icon?: React.ComponentProps<typeof Ionicons>["name"];
-  days?: number;
-  completed?: boolean;
+  completadoHoy?: boolean;
+  onToggle: () => void;
 }
 
-const Habits = ({ name, icon, days, completed }: Props) => {
-  const renderDays = () => {
-    return Array(days)
-      .fill(0)
-      .map((_, index) => <View key={index} style={styles.day} />);
-  };
-
+const Habits = ({ name, icon, completadoHoy, onToggle }: Props) => {
   return (
-    <View
-      style={[
+    <Pressable
+      onPress={onToggle}
+      style={({ pressed }) => [
         styles.container,
         {
-          opacity: completed ? 1 : 0.5,
+          backgroundColor: completadoHoy ? "#E8F9F0" : "#fff",
+          borderColor: completadoHoy ? "#4CAF50" : colors.secondary,
+          opacity: pressed ? 0.7 : 1,
+          transform: [{ scale: pressed ? 0.97 : 1 }],
         },
       ]}
     >
+      {completadoHoy && (
+        <Ionicons
+          name="checkmark-circle"
+          size={18}
+          color="#4CAF50"
+          style={styles.check}
+        />
+      )}
+
       <View style={styles.containerHeader}>
-        <Text style={styles.title}>{name.toLocaleUpperCase()}</Text>
+        <Text style={styles.title}>{name.toUpperCase()}</Text>
+
         <Ionicons
           name={icon || "water-sharp"}
-          size={26}
-          color="black"
-          style={styles.icon}
+          size={28}
+          color={completadoHoy ? "#4CAF50" : "#555"}
         />
       </View>
-      <View style={styles.containerFooter}>{renderDays()}</View>
-    </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     marginHorizontal: 10,
-    marginVertical: 20,
+    marginVertical: 15,
     borderWidth: 1,
-    borderColor: colors.secondary,
     borderRadius: 20,
-    width: "40%",
-    height: "auto",
-    gap: 5,
+    width: "45%",
+    aspectRatio: 1,
     justifyContent: "center",
+
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   },
   containerHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 10,
-    gap: 10,
   },
   title: {
     color: "black",
-    fontSize: 12,
-    fontWeight: "500",
+    fontSize: 14,
+    fontWeight: "600",
     letterSpacing: 1,
   },
-  icon: {
-    color: "black",
-  },
-  containerFooter: {
-    flexDirection: "row",
-    gap: 5,
-    marginTop: 10,
-  },
-  day: {
-    height: 4,
-    flex: 1,
-    backgroundColor: "black",
-    borderRadius: 2,
-    opacity: 0.7,
-    marginBottom: 10,
+  check: {
+    position: "absolute",
+    top: 8,
+    right: 8,
   },
 });
+
 export default Habits;
