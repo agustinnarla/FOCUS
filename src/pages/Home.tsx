@@ -5,7 +5,7 @@ import { CustomHeader } from "@/components/ui/CustomHeader";
 import { useHome } from "@/hooks/home/useHome";
 import { colors } from "@/themes/colors";
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 const Home = () => {
   const { data, loading, updateHabits, getHabits } = useHome();
@@ -15,6 +15,7 @@ const Home = () => {
       <CustomHeader title="Tus Habitos" />
       <View>
         <ProgressComponent />
+        <Text style={styles.sectionTitle}>Para hoy</Text>
         <View style={styles.habits}>
           {loading ? (
             <ActivityIndicator />
@@ -47,8 +48,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   habits: {
-    justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-  },
+    justifyContent: "flex-start",
+    paddingHorizontal: 6,
+    paddingBottom: 8,
+  },sectionTitle:{
+    marginLeft: 20,
+    marginBottom: 4,
+    marginTop: 12,
+    fontSize: 13,
+    fontWeight: "600",
+    letterSpacing: 0.8,
+    color: colors.textLabel,
+    opacity: 0.85,
+    textTransform: "uppercase",
+  }
 });

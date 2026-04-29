@@ -2,7 +2,7 @@ import { colors } from "@/themes/colors";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Props {
@@ -18,14 +18,14 @@ export const CustomHeader = ({ title }: Props) => {
   );
 
   const greeting =
-    time < 12 ? "BUENOS DÍAS" : time < 18 ? "BUENAS TARDES" : "BUENAS NOCHES";
+    time < 12 ? "Buenos días" : time < 18 ? "Buenas tardes" : "Buenas noches";
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView edges={["top"]} style={styles.safeArea}>
       <View style={styles.header}>
         <View style={styles.containerHeader}>
-          <Text style={styles.subtitle}>{greeting || "BUENOS DÍAS"} </Text>
-          <Text style={styles.title}>{title.toLocaleUpperCase()}</Text>
+          <Text style={styles.subtitle}>{greeting}</Text>
+          <Text style={styles.title}>{title}</Text>
         </View>
 
         <LinearGradient
@@ -36,8 +36,8 @@ export const CustomHeader = ({ title }: Props) => {
         >
           <MaterialCommunityIcons
             name="meditation"
-            size={25}
-            color={"black"}
+            size={26}
+            color="#ffffff"
             style={styles.icon}
           />
         </LinearGradient>
@@ -49,34 +49,54 @@ export const CustomHeader = ({ title }: Props) => {
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: colors.backgroundHeader,
-    paddingVertical: 10,
+    paddingBottom: 14,
     paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(142, 225, 33, 0.15)",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 4,
   },
   containerHeader: {
     justifyContent: "center",
-    marginTop: 10,
+    flex: 1,
+    paddingRight: 12,
   },
   subtitle: {
     color: colors.textLabel,
     fontSize: 12,
-    fontWeight: "500",
-    letterSpacing: 1,
+    fontWeight: "600",
+    letterSpacing: 0.6,
+    opacity: 0.75,
+    textTransform: "uppercase",
   },
   title: {
-    fontSize: 16,
-    fontWeight: "600",
-    letterSpacing: 1.5,
+    marginTop: 4,
+    fontSize: 22,
+    fontWeight: "700",
+    letterSpacing: 0.3,
+    color: colors.textLabel,
   },
   iconContainer: {
-    borderRadius: 40,
-    width: 50,
-    height: 50,
-    alignContent: "center",
+    borderRadius: 16,
+    width: 52,
+    height: 52,
+    alignItems: "center",
     justifyContent: "center",
+    ...Platform.select({
+      ios: {
+        shadowColor: colors.secondary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   icon: {
     alignSelf: "center",

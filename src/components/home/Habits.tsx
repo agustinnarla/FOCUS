@@ -49,11 +49,11 @@ const Habits = ({ name, icon, completadoHoy, onToggle }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    marginHorizontal: 10,
-    marginVertical: 15,
-    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    marginHorizontal: "2.5%",
+    marginVertical: 10,
+    borderWidth: 1.5,
     borderRadius: 20,
     width: "45%",
     aspectRatio: 1,
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 14,
     fontWeight: "600",
-    letterSpacing: 1,
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
   },
   check: {
     position: "absolute",

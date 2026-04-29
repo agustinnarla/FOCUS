@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import { useAuth } from "../auth/useAuth";
 
@@ -95,9 +96,11 @@ export const useHome = () => {
     }
   };
 
-  useEffect(() => {
-    getHabits();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getHabits();
+    }, [getHabits]),
+  );
 
   return { getHabits, loading, data, updateHabits };
 };
